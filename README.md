@@ -1,2 +1,2 @@
 # AudiendoStatico
-Auddiendo versione statica Grafiche Aquilane
+Audiendo versione statica di Grafiche Aquilane
