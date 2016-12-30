@@ -1,0 +1,8 @@
+How to PNetTC.exe
+
+1) PNetTC.exe	Lancia la consolle
+2) project.wfd	Progetto da lanciare
+3) -difDataInput1 C:\file.csv	Seleziona il file "file.csv" come input
+4) -o A4	Seleziona il modulo A4 come output
+5) -c test.job	Seleziona il file "test.job" come settaggio di configurazione (nome file output,pdf o Pnet,etc)
+6) -e PodiPPML	Seleziona PodiPPML come engine (o pdf,pnet native etc)
