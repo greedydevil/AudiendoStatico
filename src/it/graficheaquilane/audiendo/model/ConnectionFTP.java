@@ -11,6 +11,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 
 public class ConnectionFTP {
 	
@@ -44,7 +45,7 @@ public class ConnectionFTP {
 				this.port = 21;
 				this.username = "cesidio";
 				this.password = "cesidio";
-						    		    
+								
 				break;	
 				
 			default:
@@ -74,7 +75,7 @@ public class ConnectionFTP {
 				break;
 				
 			case "comune_roma":
-				this.directory = "";
+				this.directory = "ROOTSFTP/";
 				break;
 			
 			default:
@@ -96,7 +97,7 @@ public class ConnectionFTP {
 	private void setConnection(String cliente) {
 		
 		this.connection = new FTPClient();
-		
+				
 		try {
 			connection.connect(host, port);
             int replyCode = connection.getReplyCode();

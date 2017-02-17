@@ -36,7 +36,7 @@ public class SmtpSender {
 				
 				this.props = new Properties();
 				props.put("mail.smtp.user","ced@graficheaquilane.it"); 
-				props.put("mail.smtp.host", "smtp.aruba.it"); 
+				props.put("mail.smtp.host", "smtps.aruba.it"); 
 			    props.put("mail.smtp.auth", "true");
 			    props.put("mail.smtp.starttls.enable","true"); 
 			    props.put("mail.smtp.EnableSSL.enable","true");
@@ -50,7 +50,7 @@ public class SmtpSender {
 		    	    new Authenticator() {
 		    	        protected PasswordAuthentication  getPasswordAuthentication() {
 		    	        return new PasswordAuthentication(
-		    	                    "ced@graficheaquilane.it", "graficheaquilane23");}
+		    	                    "ced@graficheaquilane.it", "grafiche23");}
 		    	    });
 
 				

@@ -60,6 +60,23 @@ public class TemporaryDirectory {
 	    }
 	    path.delete();
 	}
+	
+	public void svuotaDirecdtory(File nomeDirectory){
+		
+		if(nomeDirectory.exists()) {
+            File[] files = nomeDirectory.listFiles();
+            
+            for(int i=0;i<files.length;i++){
+            	if(files[i].isDirectory()) {
+            		svuotaDirecdtory(files[i]);
+                }
+                else {
+                    files[i].delete();
+                }
+            }
+	    }
+	    //path.delete();
+	}
 
 	public File getDirectoryName() {
 		return nomeDirectory;
@@ -68,8 +85,7 @@ public class TemporaryDirectory {
 	public void copyFile(String source,String destination){
 		File s = new File(source);
 		File d = new File(destination);
-		copyFileStreams(s,d);
-		
+		copyFileStreams(s,d);		
 	}
 
 	private static void copyFileStreams(File source, File dest) {

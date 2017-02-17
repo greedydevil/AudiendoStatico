@@ -12,7 +12,11 @@ public class ComandoPrintNet {
 	String Comando = "\"\"\\\\192.168.1.18\\PrintNet T Designer 7\\PNetTC.exe\""; //Path statico dove risede l'eseguibile di PrintNet - Comando CON apice iniziale
 	//String Comando = "\"\\\\192.168.1.18\\PrintNet T Designer 7\\PNetTC.exe\""; //Path statico dove risede l'eseguibile di PrintNet - Comando SENZA apice iniziale
 	String nomeProgetto,anno,mese,giorno;
-
+	
+	//Inizializzo il percorso del path completo
+	File pathProgetto = new File("\\\\192.168.1.18\\Lavori IPA");
+	
+	//Costruttore generico per creare comandi sulla base di un progetto
 	public ComandoPrintNet(String NomeLavorazione,String TipoLavorazione, String CartellaDatiInput, String NomeFileInput, String TipoFormatoOutput, String NomeModuloOutput, Boolean Split, String CartellaDatiOutput, String NomeFileOutput) {
 		
 		this.NomeLavorazione = NomeLavorazione;
@@ -29,10 +33,20 @@ public class ComandoPrintNet {
 		
 	}
 	
+	//Costruttore che cerca l'ultimo progetto sulla base del cliente e del tipo di lavorazione
+	//Restituisce solo il path e non l'ultimo progetto
+	public ComandoPrintNet(String NomeLavorazione, String TipoLavorazione){
+		this.NomeLavorazione = NomeLavorazione;
+		this.TipoLavorazione = TipoLavorazione;
+		
+		CercaPathUltimoProgetto();
+	}
+	
+	
 	public void CreaComando(){
 		
 		//Inizializzo il percorso del path completo
-		File pathProgetto = new File("\\\\192.168.1.18\\Lavori IPA");
+		//File pathProgetto = new File("\\\\192.168.1.18\\Lavori IPA");
 		
 		if(NomeLavorazione=="Comune di Roma")
 			this.TipoLavorazione = CercaTipoLavorazione(NomeLavorazione, TipoLavorazione);		
@@ -66,7 +80,7 @@ public class ComandoPrintNet {
 		//Se gli passo una cartellaDatiInput ed un nomeFileInput vuol dire che devo aggiungere al comando le istruzioni
 		if(CartellaDatiInput!=""){
 			if(NomeFileInput=="") System.err.println("ComandoPrintNet - E' stata fornita una directory di input senza specificare il nome del file di input");
-			else Comando += " -difNominativi " + CartellaDatiInput + "/" + NomeFileInput;
+			else Comando += " -difNominativi " + CartellaDatiInput + "\\" + NomeFileInput;
 		}
 		
 		//Aggiungo al comando il TipoFormatoOutput (qualora specificato),cioè se PDF,AFP,PnetNative etc
@@ -84,7 +98,7 @@ public class ComandoPrintNet {
 		//Se gli passo una CartellaDatiOutput ed un NomeFileOutput lo devo aggiungere al comando
 		if(CartellaDatiOutput!=""){
 			if(NomeFileOutput=="") System.err.println("ComandoPrintNet - E' stata fornita una directory di output senza specificare il nome del file di output");
-			else Comando += " -f " + "\"" + CartellaDatiOutput + "/" + NomeFileOutput + "\"";
+			else Comando += " -f " + "\"" + CartellaDatiOutput + "\\" + NomeFileOutput + "\"";
 		}
 		
 		//Aggiungo il tag " di chiusura del comando
@@ -166,6 +180,7 @@ public class ComandoPrintNet {
 	}
 	
 	//Cerco il progetto più recente,cioè quelli con estensione .wfd e che non contengono la scritta copia
+	//Questo metodo è usato se si conosce già il path completo (giorno,mese,anno...)
 	public String CercaProgetto(File path){
 		
 		String[] children = path.list();
@@ -182,13 +197,43 @@ public class ComandoPrintNet {
 		
 		return nomeProgetto;
 	}
-
+	
+	public void CercaPathUltimoProgetto(){
+		
+		//File path_tmp = this.pathProgetto;
+		//String anno_tmp,mese_tmp,giorno_tmp;
+			
+		if(NomeLavorazione=="Comune di Roma")
+			TipoLavorazione = CercaTipoLavorazione(NomeLavorazione, TipoLavorazione);		
+		
+		//A questo punto mi cambia il path
+		pathProgetto = new File(pathProgetto.getAbsoluteFile() + "\\" + NomeLavorazione + "\\" + TipoLavorazione);
+		
+		//Ora mi cerco l'anno più recente all'interno della stessa lavorazione
+		anno = CercaElementoMax(pathProgetto, 0);
+		pathProgetto = new File(pathProgetto.getAbsoluteFile() + "\\" + anno);
+		
+		//Cerco l'ultimo mese presente
+		mese = CercaElementoMax(pathProgetto, 1);
+		pathProgetto = new File(pathProgetto.getAbsoluteFile() + "\\" + mese);
+		
+		//Cerco il giorno più recente
+		giorno = CercaElementoMax(pathProgetto, 1);
+		pathProgetto = new File(pathProgetto.getAbsoluteFile() + "\\" + giorno);
+		
+		//return pathProgetto.toString();
+	}
+		
 	public String getComando() {
 		return Comando;
 	}
 
 	public void setComando(String comando) {
 		Comando = comando;
+	}
+
+	public File getPathProgetto() {
+		return pathProgetto;
 	}
 	
 }
