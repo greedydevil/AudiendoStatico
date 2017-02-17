@@ -22,6 +22,10 @@ public class JdbcMysqlConnection {
 				URL = "jdbc:mysql://192.168.1.222/intranet";
 			break;
 			
+			case "cesidioBello":
+				URL = "jdbc:mysql://192.168.1.222/cesidioBello";
+			break;
+			
 			default:
 				URL = "jdbc:mysql://192.168.1.222/cesidioBello";
 			break;
