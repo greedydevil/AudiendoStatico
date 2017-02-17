@@ -28,9 +28,7 @@ public class Main {
 		
 		//Gestisco i riprisitini di Roma Capitale
 		RipristiniRomaCapitale rrc = new RipristiniRomaCapitale(0);
-		
-		
-		//Test ciaooooo
+	
 		
 		
 		
